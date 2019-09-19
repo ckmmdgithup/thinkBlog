@@ -1,0 +1,80 @@
+﻿<!--_meta 作为公共模版分离出去-->
+
+{include file="public/_meta" /}
+	<![endif]-->
+	<!--/meta 作为公共模版分离出去-->
+
+	<title>h-ui.admin.pro v1.0</title>
+	<meta name="keywords" content="h-ui.admin.pro v1.0,H-ui网站后台模版,后台模版下载,后台管理系统模版,HTML后台模版下载">
+	<meta name="description" content="h-ui.admin.pro v1.0，是一款由国人开发的轻量级扁平化网站后台模板，完全免费开源的网站后台管理系统模版，适合中小型CMS后台系统。">
+</head>
+<body>
+
+	<!--_menu 作为公共模版分离出去-->
+	{include file="public/_menu" /}
+	<!--/_menu 作为公共模版分离出去-->
+
+	<div class="Hui-admin-dislpayArrow">
+		<a href="javascript:void(0);" onClick="displaynavbar(this)">
+			<i class="Hui-iconfont Hui-iconfont-left">&#xe6d4;</i>
+			<i class="Hui-iconfont Hui-iconfont-right">&#xe6d7;</i>
+		</a>
+	</div>
+
+	<section class="Hui-admin-article-wrapper">
+		<!--_header 作为公共模版分离出去-->
+		{include file="public/_header" /}
+		<!--/_header 作为公共模版分离出去-->
+
+		<div class="Hui-admin-article">
+			<nav class="breadcrumb" style="background-color:#fff;padding: 0 24px">
+				首页
+				<span class="c-gray en">/</span>
+				关于博主
+			</nav>
+
+			<article class="Hui-admin-content clearfix">
+				<div class="panel col-lg-4 col-sm-8 col-xs-12">
+						<div class="panel-body">
+							<span class="c-black va-t">缩略图：</span><img src="/upload/{$aboutme.thumbnail}" alt=""class="radius">
+						</div>
+						<div class="panel-body">
+							<span class="c-black">名称：{$aboutme.name}</span>
+						</div>
+						<div class="panel-body">
+							<span class="c-black">职业：{$aboutme.career}</span>
+						</div>
+						<div class="panel-body">
+							<span class="c-black">简介：{$aboutme.introduction}</span>
+						</div>
+						<div class="panel-body">
+							<a href="javascript:;" onclick="aboutme('关于博主','/admin/aboutmeModify')" class="btn btn-primary radius" type="button" value="修改">修改</a>
+						</div>
+				</div>
+			</article>
+		</div>
+	</section>
+
+<!--_footer 作为公共模版分离出去-->
+	{include file="public/_footer" /}
+<!--/_footer /作为公共模版分离出去-->
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="__STATIC__/admin/business/js/main.js"></script>
+	<script>
+		function aboutme(title,url){
+			var index = layer.open({
+				type: 2,
+				title: title,
+				content: url,
+				area: ['500px', '400px'],
+				end:function () {
+					window.location.reload();
+				}
+			});
+		}
+
+
+	</script>
+</body>
+</html>

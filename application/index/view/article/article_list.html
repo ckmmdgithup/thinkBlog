@@ -1,0 +1,53 @@
+
+<!--作为公共模板mate-->
+{include file="public/meta" /}
+
+<!--作为公共模板header-->
+{include file="public/header" /}
+
+<div id="content">
+    <!--left-->
+    <div class="left" id="learn">
+        <div class="weizi">
+            <div class="wz_text">当前位置：<a href="#">首页</a>><h1>文章列表</h1></div>
+        </div>
+        <div class="l_content">
+            <!--wz-->
+            {volist name="articleList" id="vo"}
+            <div class="wz">
+                <h3><a href="#" title="{$vo.article_title}">{$vo.article_title | html_entity_decode | html_entity_decode}</a></h3>
+                <dl>
+                    <dt><img src="/upload/{$vo.article_thumbnail}" width="200"  height="123" alt=""></dt>
+                    <dd>
+                        <p class="dd_text_1">{$vo.article_abstract | html_entity_decode | html_entity_decode}</p>
+                        <p class="dd_text_2">
+                            <span class="left author">{$vo.article_author | html_entity_decode | html_entity_decode}</span>
+                            <span class="left sj" style="width: auto">更新时间:{$vo.update_time}</span>
+                            <span class="left yd"><a href="/articleDetail/{$vo.id}" title="{$vo.article_keywords}">阅读全文</a></span>
+
+                        <div class="clear"></div>
+                        </p>
+                    </dd>
+                    <div class="clear"></div>
+                </dl>
+            </div>
+            {/volist}
+            <!--wz end-->
+            {$articleList|raw}
+        </div>
+        {$articleList|raw}
+    </div>
+    <!--left end-->
+    <!--right-->
+    {include file="public/advertisement" /}
+    <!--right end-->
+    <div class="clear"></div>
+</div>
+
+<!--作为公共模板footer-->
+{include file="public/footer" /}
+
+</body>
+</html>
+
+

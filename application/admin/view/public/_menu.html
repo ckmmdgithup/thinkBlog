@@ -1,0 +1,42 @@
+<aside class="Hui-admin-aside-wrapper">
+  <div class="Hui-admin-logo-wrapper">
+    <a class="logo navbar-logo" href="/admin">
+      <i class="va-m iconpic global-logo"></i>
+      <span class="va-m">admin</span>
+    </a>
+  </div>
+  <div class="Hui-admin-menu-dropdown bk_2">
+    <dl id="menu-home" class="Hui-menu">
+      <dd class="Hui-menu-item-frist">
+        <ul>
+          <li><a href="/admin" title="首页"><i class="Hui-iconfont">&#xe616;</i>&nbsp; 首页</a></li>
+        </ul>
+      </dd>
+    </dl>
+    {volist name="basesyscat" id="cat"}
+    <dl id="" class="Hui-menu">
+      <dt class="Hui-menu-title"><i class="Hui-iconfont">&#xe616;</i><a href="{$cat.link}" style="color: white">{$cat.name}</a><i class="Hui-iconfont Hui-admin-menu-dropdown-arrow">&#xe6d5;</i></dt>
+      <dd class="Hui-menu-item">
+        <ul>
+          {volist name="cat['son']" id="cat2"}
+          <li>
+            <dl class="Hui-menu">
+              <dt class="Hui-menu-title"><a href="{$cat2.link}" title="">{$cat2.name}</a><i class="Hui-iconfont Hui-admin-menu-dropdown-arrow">&#xe6d5;</i></dt>
+              <dd class="Hui-menu-item">
+                <ul>
+                  {volist name="cat2['son']" id="cat3"}
+                  <li class="current">
+                    <a href="{$cat3.link}/{$cat3.id}" title="">{$cat3.name}</a>
+                  </li>
+                  {/volist}
+                </ul>
+              </dd>
+            </dl>
+          </li>
+          {/volist}
+        </ul>
+      </dd>
+    </dl>
+    {/volist}
+  </div>
+</aside>

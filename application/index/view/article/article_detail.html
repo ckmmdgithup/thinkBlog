@@ -1,0 +1,42 @@
+
+<!--作为公共模板mate-->
+{include file="public/meta" /}
+
+<!--作为公共模板header-->
+{include file="public/header" /}
+
+<div id="content">
+    <!--left-->
+    <div class="left" id="news">
+        <div class="weizi">
+            <div class="wz_text">当前位置：<a href="#">首页</a>><a href="#">文章列表</a>><span>文章内容</span></div>
+        </div>
+        <div class="news_content">
+            <div class="news_top">
+                <h1>{$articledata.article_title | html_entity_decode | html_entity_decode}</h1>
+                <p>
+                    <span class="left sj">最后更新时间:{$articledata.update_time}</span><span class="left fl">分类:文章</span>
+                    <span class="left author">{$articledata.article_author | html_entity_decode | html_entity_decode}</span>
+                </p>
+                <div class="clear"></div>
+            </div>
+            <div class="news_text">
+                {$articledata.article_editor | html_entity_decode | html_entity_decode | raw}
+            </div>
+        </div>
+
+    </div>
+    <!--left end-->
+    <!--right-->
+    {include file="public/advertisement" /}
+    <!--right end-->
+    <div class="clear"></div>
+</div>
+
+<!--作为公共模板footer-->
+{include file="public/footer" /}
+
+</body>
+</html>
+
+

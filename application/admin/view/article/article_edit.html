@@ -1,0 +1,326 @@
+<!--_meta 作为公共模版分离出去-->
+{include file="public/_meta" /}
+	<![endif]-->
+	<!--/meta 作为公共模版分离出去-->
+<link rel="stylesheet" type="text/css" href="__STATIC__/admin/lib/webuploader/0.1.5/webuploader.css">
+	<title>文章编辑</title>
+	<meta name="keywords" content="文章添加">
+	<meta name="description" content="文章添加">
+</head>
+<body>
+	<article class="Hui-admin-page-container">
+		<form class="form form-horizontal" id="form-article-add" >
+			<div class="row clearfix">
+				<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>ID：</label>
+				<div class="form-controls col-xs-8 col-sm-9">
+					<input type="text" class="input-text" value="{$articledata.id}" placeholder="" id="articleId" name="id" readonly>
+				</div>
+			</div>
+			<div class="row clearfix">
+				<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>文章标题：</label>
+				<div class="form-controls col-xs-8 col-sm-9">
+					<input type="text" class="input-text" value="{$articledata.article_title | html_entity_decode | html_entity_decode}" placeholder="" id="articleTitle" name="articleTitle">
+
+				</div>
+			</div>
+			<div class="row clearfix">
+				<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>分类栏目：</label>
+				<div class="form-controls col-xs-8 col-sm-9">
+					<span class="select-box">
+						<select name="articleClassify" class="select">
+							{volist name="artcat" id="vo"}
+							<option value="{$vo.id}">{$vo.name}</option>
+							{/volist}
+						</select>
+					</span>
+				</div>
+			</div>
+			<div id="uploader" class="row clearfix">
+				<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>缩略图：</label>
+				<div id="fileList" class="formControls col-xs-8 col-sm-9 uploader-list" style="width: 80%">
+					<input type="text" class="input-text" value="" placeholder="" name="articleThumbnail" style="display: none">
+					<div id="filePicker">选择图片</div>
+					<img id="article_thumbnail" src="/upload/{$articledata.article_thumbnail}" alt="">
+				</div>
+			</div>
+			<div class="row clearfix">
+				<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>关键词：</label>
+				<div class="form-controls col-xs-8 col-sm-9">
+					<input type="text" class="input-text" value="{$articledata.article_keywords | html_entity_decode | html_entity_decode}" placeholder="" id="articleKeywords" name="articleKeywords">
+				</div>
+			</div>
+			<div class="row clearfix">
+				<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>文章摘要：</label>
+				<div class="form-controls col-xs-8 col-sm-9">
+					<textarea cols="" rows="" class="textarea textarea-article"  placeholder="说点什么...最少输入10个字符" name="articleAbstract">{$articledata.article_abstract | html_entity_decode | html_entity_decode}</textarea>
+				</div>
+			</div>
+			<div class="row clearfix">
+				<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>文章作者：</label>
+				<div class="form-controls col-xs-8 col-sm-9">
+					<input type="text" class="input-text" value="{$articledata.article_author | html_entity_decode | html_entity_decode}" placeholder="" id="articleAuthor" name="articleAuthor">
+				</div>
+			</div>
+			<div class="row clearfix">
+				<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>文章来源：</label>
+				<div class="form-controls col-xs-8 col-sm-9">
+					<input type="text" class="input-text" value="{$articledata.article_source | html_entity_decode | html_entity_decode}" placeholder="" id="articleSource" name="articleSource">
+				</div>
+			</div>
+			<div class="row clearfix">
+				<label class="form-label col-xs-4 col-sm-2">文章内容：</label>
+				<div class="form-controls col-xs-8 col-sm-9">
+					<script id="articleEditor" type="text/plain" style="width:100%;height:400px;">{$articledata.article_editor | html_entity_decode | html_entity_decode | raw}</script>
+				</div>
+			</div>
+			<div class="row clearfix">
+				<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
+					<button class="btn btn-primary radius" type="submit"><i class="Hui-iconfont">&#xe632;</i> 保存并提交审核</button>
+					<button onClick="article_save();" class="btn btn-secondary radius" type="button"><i class="Hui-iconfont">&#xe632;</i> 保存草稿</button>
+					<button onClick="layer_close();" class="btn btn-default radius" type="button">&nbsp;&nbsp;取消&nbsp;&nbsp;</button>
+				</div>
+			</div>
+		</form>
+	</article>
+
+	<!--_footer 作为公共模版分离出去-->
+	{include file="public/_footer" /}
+	<!--/_footer /作为公共模版分离出去-->
+
+	<!--请在下方写此页面业务相关的脚本-->
+	<script type="text/javascript" src="__STATIC__/admin/lib/jquery.validation/1.14.0/jquery.validate.js"></script>
+	<script type="text/javascript" src="__STATIC__/admin/lib/jquery.validation/1.14.0/validate-methods.js"></script>
+	<script type="text/javascript" src="__STATIC__/admin/lib/jquery.validation/1.14.0/messages_zh.js"></script>
+	<script type="text/javascript" src="__STATIC__/admin/lib/webuploader/0.1.5/webuploader.min.js"></script>
+	<script type="text/javascript" src="__STATIC__/admin/lib/ueditor/1.4.3/ueditor.config.js"></script>
+	<script type="text/javascript" src="__STATIC__/admin/lib/ueditor/1.4.3/ueditor.all.min.js"> </script>
+	<script type="text/javascript" src="__STATIC__/admin/lib/ueditor/1.4.3/lang/zh-cn/zh-cn.js"></script>
+	<script type="text/javascript" src="__STATIC__/admin/business/js/main.js"></script>
+
+	<script type="text/javascript">
+		$(function(){
+			//获取打开文章的数据库ID
+			var id = $('#articleId').val();
+			// 复选框样式
+			$('.skin-minimal input').iCheck({
+				checkboxClass: 'icheckbox-blue',
+				radioClass: 'iradio-blue',
+				increaseArea: '20%'
+			});
+			// 是否评论
+			$('#articleComment').on('ifChecked', function(event){
+				$("#comment-datetime-start,#comment-datetime-end").attr("disabled",false).removeClass("disabled");
+			});
+			$('#articleComment').on('ifUnchecked', function(event){
+				$("#comment-datetime-start,#comment-datetime-end").attr("disabled",true).addClass("disabled");
+			});
+
+			// 设置评论日期
+			$("#comment-datetime-start").datetimepicker({
+		    format: 'yyyy-mm-dd',
+		    minView: "month",
+		    todayBtn:  1,
+		    autoclose: 1,
+		    endDate : new Date(),
+		  }).on('changeDate', function(event) {
+		    event.preventDefault();
+		    event.stopPropagation();
+		    var startTime = event.date;
+		    $('#search-datetime-end').datetimepicker('setStartDate',startTime);
+		  });
+		  $("#comment-datetime-end").datetimepicker({
+		    format: 'yyyy-mm-dd',
+		    minView: "month",
+		    todayBtn:  1,
+		    autoclose: 1,
+		    endDate : new Date(),
+		  }).on('changeDate', function(event) {
+		    event.preventDefault();
+		    event.stopPropagation();
+		    var endTime = event.date;
+		    $("#search-datetime-start").datetimepicker('setEndDate',endTime);
+		  });
+
+			// 文章摘要
+			$(".textarea-article").Huitextarealength({
+				minlength: 10,
+				maxlength: 500
+			});
+
+			// 文章内容 实例化百度富文本编辑器
+			var ue = UE.getEditor('articleEditor');
+
+			// 表单提交验证
+			$("#form-article-add").validate({
+				rules: {
+					articleTitle: {
+						required: true,
+					},
+					articleSubTitle: {
+						required: true,
+					},
+					articleClassify: {
+						required: true,
+					},
+					articleType: {
+						required: true,
+					},
+					articleSort: {
+						required: true,
+					},
+					articleKeywords: {
+						required: true,
+					},
+					articleAbstract: {
+						required: true,
+						minlength: 10,
+						maxlength: 500
+					},
+					articleAuthor: {
+						required: true,
+					},
+					articleSource: {
+						required: true,
+					},
+				},
+				onkeyup: false,
+				focusCleanup: true,
+				success: "valid",
+				submitHandler: function(form){
+					//校验ID是否被人为修改
+					if (id!=$('#articleId').val()){
+						layer.open({
+							title: '警告！',
+							content: 'id被人为修改，非法的操作',
+						});
+					}else {
+						//向后台抛送更新亲求
+					$(form).ajaxSubmit({type:"post",url:"/admin/articleUpdate",success:function (result) {
+							if (result['message']=='success'){
+								layer.open({
+									title: '提示！',
+									content: '更新成功',
+									yes:function () {
+										window.location.reload();
+									}
+								});
+							}else {
+								layer.open({
+									title: '警告！',
+									content: '更新失败',
+								});
+							}
+						}})};
+				},
+			});
+		});
+	</script>
+	<script>
+		// 图片上传demo
+		jQuery(function() {
+			var $ = jQuery,
+					$list = $('#fileList'),
+					// 优化retina, 在retina下这个值是2
+					ratio = window.devicePixelRatio || 1,
+
+					// 缩略图大小
+					thumbnailWidth = 100 * ratio,
+					thumbnailHeight = 100 * ratio,
+
+					// Web Uploader实例
+					uploader;
+
+			// 初始化Web Uploader
+			uploader = WebUploader.create({
+
+				// 自动上传。
+				auto: true,
+
+				// swf文件路径
+				swf:  '__STATIC__/admin/webuploader/0.1.5/Uploader.swf',
+
+				// 文件接收服务端。
+				server: '/api/imageUpload',
+				// 选择文件的按钮。可选。
+				// 内部根据当前运行是创建，可能是input元素，也可能是flash.
+				pick: '#filePicker',
+
+				// 只允许选择文件，可选。
+				accept: {
+					title: 'Images',
+					extensions: 'gif,jpg,jpeg,bmp,png',
+					mimeTypes: 'image/*'
+				}
+			});
+
+			// 当有文件添加进来的时候
+			uploader.on( 'fileQueued', function( file ) {
+				var $li = $(
+						'<div id="' + file.id + '" class="file-item thumbnail">' +
+						'<img>' +
+						'<div class="info">' + file.name + '</div>' +
+						'</div>'
+						),
+						$img = $li.find('img');
+
+				$list.append( $li );
+
+				// 创建缩略图
+				uploader.makeThumb( file, function( error, src ) {
+					if ( error ) {
+						$img.replaceWith('<span>不能预览</span>');
+						return;
+					}
+
+					$img.attr( 'src', src );
+				}, thumbnailWidth, thumbnailHeight );
+			});
+
+			// 文件上传过程中创建进度条实时显示。
+			uploader.on( 'uploadProgress', function( file, percentage ) {
+				var $li = $( '#'+file.id ),
+						$percent = $li.find('.progress span');
+
+				// 避免重复创建
+				if ( !$percent.length ) {
+					$percent = $('<p class="progress"><span></span></p>')
+							.appendTo( $li )
+							.find('span');
+				}
+
+				$percent.css( 'width', percentage * 100 + '%' );
+			});
+
+			// 文件上传成功，给item添加成功class, 用样式标记上传成功。
+			uploader.on( 'uploadSuccess', function(file,data) {
+					$('#article_thumbnail').remove();
+					$( '#'+file.id ).addClass('upload-state-done');
+					//把图片在服务器的地址放到页面，存入数据库
+					$('#fileList>input').attr("value",data._raw);
+
+			},'json');
+
+			// 文件上传失败，现实上传出错。
+			uploader.on( 'uploadError', function( file ) {
+				var $li = $( '#'+file.id ),
+						$error = $li.find('div.error');
+
+				// 避免重复创建
+
+				if ( !$error.length ) {
+					$error = $('<div class="error"></div>').appendTo( $li );
+				}
+
+				$error.text('上传失败');
+			});
+
+			// 完成上传完了，成功或者失败，先删除进度条。
+			uploader.on( 'uploadComplete', function( file ) {
+				$( '#'+file.id ).find('.progress').remove();
+			});
+		});
+
+	</script>
+	<!--/请在上方写此页面业务相关的脚本-->
+</body>
+</html>

@@ -1,0 +1,125 @@
+﻿<!--_meta 作为公共模版分离出去-->
+
+{include file="public/_meta" /}
+	<![endif]-->
+	<!--/meta 作为公共模版分离出去-->
+
+	<title>记录</title>
+	<meta name="keywords" content="记录">
+	<meta name="description" content="记录">
+</head>
+<body>
+
+	<!--_menu 作为公共模版分离出去-->
+	{include file="public/_menu" /}
+	<!--/_menu 作为公共模版分离出去-->
+
+	<div class="Hui-admin-dislpayArrow">
+		<a href="javascript:void(0);" onClick="displaynavbar(this)">
+			<i class="Hui-iconfont Hui-iconfont-left">&#xe6d4;</i>
+			<i class="Hui-iconfont Hui-iconfont-right">&#xe6d7;</i>
+		</a>
+	</div>
+
+	<section class="Hui-admin-article-wrapper">
+		<!--_header 作为公共模版分离出去-->
+		{include file="public/_header" /}
+		<!--/_header 作为公共模版分离出去-->
+
+		<div class="Hui-admin-article">
+			<nav class="breadcrumb" style="background-color:#fff;padding: 0 24px">
+				首页
+				<span class="c-gray en">/</span>
+				记录
+			</nav>
+
+			<article class="Hui-admin-content clearfix">
+				<div class="panel col-lg-12 col-sm-12 col-xs-12">
+					<div class="row clearfix">
+						<label class="form-label col-xs-2 col-sm-1 col-lg-1 va-m"><h3>记录：</h3></label>
+						<div class="form-controls col-xs-10 col-sm-5 col-lg-3">
+							<textarea id="remarks" name="remarks" cols="" rows="" class="textarea"  placeholder="说点什么...100个字符以内" dragonfly="true" onKeyUp="textarealength(this,100)"></textarea>
+							<p class="textarea-numberbar"><em class="textarea-length">0</em>/100</p>
+						</div>
+					</div>
+					<div class="row clearfix">
+						<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3 col-lg-2">
+							<input id="btn" class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
+						</div>
+					</div>
+				</div>
+			</article>
+			<article class="Hui-admin-content clearfix">
+				<div class="panel col-lg-12 col-sm-12 col-xs-12">
+					<ul class="commentList">
+						{volist name="diary" id="vo"}
+						<li class="item cl"> <a href="#"><i class="avatar size-L radius"><img alt="" src="/upload/{$author.thumbnail}"></i></a>
+							<div class="comment-main">
+								<header class="comment-header">
+									<div class="comment-meta"><a class="comment-author" href="#">{$author.name}</a> 发表于
+										<time title="{$vo.create_time}" datetime="{$vo.create_time}">{$vo.create_time}</time>
+									</div>
+								</header>
+								<div class="comment-body">
+									<div class="col-lg-1 col-sm-2 col-xs-2">
+										<p>
+											<a title="删除" href="javascript:;" onclick="diary_del(this,'/admin/diaryDel',{$vo.id})" class="ml-5" style="text-decoration:none">
+												<i class="Hui-iconfont">&#xe6e2;删除</i>
+											</a>
+										</p>
+									</div>
+									<div class="col-lg-11 col-sm-10 col-xs-10">
+										<p><a href="#"></a> {$vo.remarks}</p>
+									</div>
+
+								</div>
+							</div>
+						</li>
+						{/volist}
+					</ul>
+					{$diary|raw}
+				</div>
+			</article>
+		</div>
+	</section>
+
+<!--_footer 作为公共模版分离出去-->
+	{include file="public/_footer" /}
+<!--/_footer /作为公共模版分离出去-->
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="__STATIC__/admin/business/js/main.js"></script>
+	<script>
+			//发表心情
+			$('#btn').click(function () {
+				var remarks = $('#remarks').val();
+				layer.open({
+					title: '发表',
+					content: '确认发表此条心情？',
+					btn:'我确定',
+					yes:function () {
+						$.post('/admin/diaryAdd',{remarks:remarks},function (result) {
+								if (result == true){
+									window.location.reload();
+								}else {
+									layer.msg('发表失败！',{icon: 3,time:1000})
+								}
+						},'json')
+					},
+
+				});
+			});
+			//删除心情
+			function diary_del(obj,url,id) {
+					$.get(url,{id:id},function (result) {
+						if (result.status==true){
+							window.location.reload();
+						} else {
+							layer.msg('删除失败！',{icon: 3,time:1000})
+						}
+					},'json')
+			}
+
+	</script>
+</body>
+</html>

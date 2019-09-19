@@ -1,0 +1,128 @@
+﻿<!--_meta 作为公共模版分离出去-->
+
+{include file="public/_meta" /}
+<![endif]-->
+<!--/meta 作为公共模版分离出去-->
+
+<title>h-ui.admin.pro v1.0</title>
+<meta name="keywords" content="h-ui.admin.pro v1.0,H-ui网站后台模版,后台模版下载,后台管理系统模版,HTML后台模版下载">
+<meta name="description" content="h-ui.admin.pro v1.0，是一款由国人开发的轻量级扁平化网站后台模板，完全免费开源的网站后台管理系统模版，适合中小型CMS后台系统。">
+</head>
+<body>
+
+<!--_menu 作为公共模版分离出去-->
+{include file="public/_menu" /}
+<!--/_menu 作为公共模版分离出去-->
+
+<div class="Hui-admin-dislpayArrow">
+	<a href="javascript:void(0);" onClick="displaynavbar(this)">
+		<i class="Hui-iconfont Hui-iconfont-left">&#xe6d4;</i>
+		<i class="Hui-iconfont Hui-iconfont-right">&#xe6d7;</i>
+	</a>
+</div>
+
+<section class="Hui-admin-article-wrapper">
+	<!--_header 作为公共模版分离出去-->
+	{include file="public/_header" /}
+	<!--/_header 作为公共模版分离出去-->
+
+
+	<div class="Hui-admin-article">
+		<nav class="breadcrumb" style="background-color:#fff;padding: 0 24px">
+			首页
+			<span class="c-gray en">/</span>
+			管理员管理
+			<span class="c-gray en">/</span>
+			管理员列表
+		</nav>
+
+		<article class="Hui-admin-content clearfix">
+			<div class="panel">
+				<form action="/admin/adminList" method="post">
+					<div class="panel-body">
+						<div class="text-c">
+							<input type="text" class="input-text" style="width:450px" placeholder="输入管理员名称`手机号码或者邮箱" id="" name="search">
+							<button type="submit" class="btn btn-success" id="" name=""><i class="Hui-iconfont">&#xe665;</i> 搜用户</button>
+						</div>
+					</div>
+				</form>
+			</div>
+
+			<div class="panel mt-20">
+				<div class="panel-body">
+					<div class="clearfix">
+							<span class="f-l">
+								<a href="javascript:;" onclick="admin_add('添加管理员','adminAdd')" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 添加管理员</a>
+							</span>
+						<span class="f-r">共有数据：<strong>{$num}</strong> 条</span>
+					</div>
+					<div class="mt-20 clearfix">
+						<table class="table table-border table-bordered table-bg table-hover table-sort">
+							<thead>
+							<tr>
+								<th scope="col" colspan="9">管理员列表</th>
+							</tr>
+							<tr class="text-c">
+								<th width="25"><input type="checkbox" name="" value=""></th>
+								<th width="40">ID</th>
+								<th width="150">登录名</th>
+								<th width="90">手机</th>
+								<th width="150">邮箱</th>
+								<th width="130">加入时间</th>
+								<th width="100">是否已启用</th>
+								<th width="100">操作</th>
+							</tr>
+							</thead>
+							<tbody>
+							{volist name="adminList" id="vo"}
+							<tr class="text-c">
+								<td><input type="checkbox" value="1" name="{$vo.id}"></td>
+								<td>{$vo.id}</td>
+								<td>{$vo.name | html_entity_decode | html_entity_decode}</td>
+								<td>{$vo.mobile}</td>
+								<td>{$vo.email}</td>
+								<td>{$vo.create_time}</td>
+								<td class="td-status">
+                                    {switch $vo.status}
+                                        {case 1}<span class="label label-success radius">已启用</span>{/case}
+                                        {case 0}<span class="label label-default radius">已禁用</span>{/case}
+                                    {/switch}
+								</td>
+								<td class="td-manage">
+									{switch $vo.status}
+									{case 1}<a style="text-decoration:none" onClick="admin_stop(this,'/admin/adminStatus',{$vo.id},0)" href="javascript:;" title="停用">
+										<i class="Hui-iconfont">&#xe631;</i>
+                                    </a>{/case}
+									{case 0}<a onclick="admin_start(this,'/admin/adminStatus',{$vo.id},1)" href="javascript:;" title="启用" style="text-decoration:none">
+									<i class="Hui-iconfont"></i>
+								</a>{/case}
+									{/switch}
+                                    <a title="编辑" href="javascript:;" onclick="admin_edit('管理员编辑','/admin/adminEdit/'+{$vo.id},1,'800','500')" class="ml-5" style="text-decoration:none">
+                                        <i class="Hui-iconfont">&#xe6df;</i>
+                                    </a>
+                                    <a title="删除" href="javascript:;" onclick="admin_del(this,'/admin/adminStatus',{$vo.id},-1)" class="ml-5" style="text-decoration:none">
+                                        <i class="Hui-iconfont">&#xe6e2;</i>
+                                    </a>
+                                </td>
+							</tr>
+							{/volist}
+							</tbody>
+						</table>
+					</div>
+					<div class="mt-20">
+						{$adminList | raw}
+					</div>
+				</div>
+			</div>
+		</article>
+	</div>
+</section>
+
+<!--_footer 作为公共模版分离出去-->
+{include file="public/_footer" /}
+<!--/_footer /作为公共模版分离出去-->
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="__STATIC__/admin/business/js/main.js"></script>
+</body>
+</html>

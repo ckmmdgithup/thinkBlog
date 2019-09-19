@@ -1,0 +1,101 @@
+﻿<!--_meta 作为公共模版分离出去-->
+
+{include file="public/_meta" /}
+	<![endif]-->
+	<!--/meta 作为公共模版分离出去-->
+
+	<title>系统设置</title>
+	<meta name="keywords" content="系统设置">
+	<meta name="description" content="系统设置">
+</head>
+<body>
+
+	<!--_menu 作为公共模版分离出去-->
+	{include file="public/_menu" /}
+	<!--/_menu 作为公共模版分离出去-->
+
+	<div class="Hui-admin-dislpayArrow">
+		<a href="javascript:void(0);" onClick="displaynavbar(this)">
+			<i class="Hui-iconfont Hui-iconfont-left">&#xe6d4;</i>
+			<i class="Hui-iconfont Hui-iconfont-right">&#xe6d7;</i>
+		</a>
+	</div>
+
+	<section class="Hui-admin-article-wrapper">
+		<!--_header 作为公共模版分离出去-->
+		{include file="public/_header" /}
+		<!--/_header 作为公共模版分离出去-->
+
+		<div class="Hui-admin-article">
+			<nav class="breadcrumb" style="background-color:#fff;padding: 0 24px">
+				首页
+				<span class="c-gray en">/</span>
+				系统管理
+				<span class="c-gray en">/</span>
+				栏目管理
+			</nav>
+
+			<div class="pd-20 text-c">
+				<form action="/admin/systemCategory" method="post">
+				<div class="panel mt-20">
+					<div class="panel-body"发布>
+						<div class="text-c">
+							<input type="text" name="search" id="" placeholder="栏目名称、id" style="width:250px" class="input-text">
+							<button name="" id="" class="btn btn-success" type="submit"><i class="Hui-iconfont">&#xe665;</i> 搜索</button>
+						</div>
+					</div>
+				</div>
+				</form>
+				<div class="panel mt-20">
+					<div class="panel-body"发布>
+						<div class="clearfix">
+							<span class="f-l">
+								<a class="btn btn-primary radius" onclick="system_category_add('添加栏目','/admin/systemCategoryAdd','800','500')" href="javascript:;"><i class="Hui-iconfont">&#xe600;</i> 添加栏目</a>
+							</span>
+							<span class="f-r">共有数据：<strong>{$num}</strong> 条</span>
+						</div>
+
+						<div class="mt-20 clearfix">
+							<table class="table table-border table-bordered table-hover table-bg table-sort">
+								<thead>
+								<tr class="text-c">
+									<th width="25"><input type="checkbox" name="" value=""></th>
+                                    <th width="50">排序</th>
+									<th width="60">ID</th>
+
+									<th width="180">栏目名称</th>
+                                    <th>路由地址</th>
+									<th width="100">操作</th>
+								</tr>
+								</thead>
+								<tbody>
+                                {volist name='syscat' id='vo'}
+								<tr class="text-c">
+									<td><input type="checkbox" name="" value=""></td>
+                                    <td><input style="width: 25px" type="text" name="listorder" value="{$vo.listorder}"></td>
+									<td>{$vo.id}</td>
+									<td class="text-l">{$vo.name | html_entity_decode | html_entity_decode}</td>
+                                    <td class="text-l">{$vo.link | html_entity_decode | html_entity_decode}</td>
+									<td class="f-14"><a title="编辑" href="javascript:;" onclick="system_category_edit('栏目编辑','/admin/systemCategoryEdit/'+{$vo.id},'1','700','480')" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a> <a title="删除" href="javascript:;" onclick="article_category_del(this,'1')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
+								</tr>
+								{/volist}
+								</tbody>
+							</table>
+						</div>
+						{$syscat | raw}
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+<!--_footer 作为公共模版分离出去-->
+	{include file="public/_footer" /}
+<!--/_footer /作为公共模版分离出去-->
+
+<!--请在下方写此页面业务相关的脚本-->
+	<script type="text/javascript" src="__STATIC__/admin/lib/datatables/1.10.15/jquery.dataTables.min.js"></script>
+	<script type="text/javascript" src="__STATIC__/admin/lib/laypage/1.2/laypage.js"></script>
+	<script type="text/javascript" src="__STATIC__/admin/business/js/main.js"></script>
+</body>
+</html>
